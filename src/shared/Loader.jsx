@@ -4,6 +4,6 @@ import React from 'react'
 export const Loader = () => <RLoader
   type="Puff"
   color="#00BFFF"
-  height="100"
-  width="100"
+  height={100}
+  width={100}
 />
