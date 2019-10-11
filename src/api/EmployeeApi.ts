@@ -1,4 +1,4 @@
-import { API_URL } from './config';
+import { API_URL, MAX_PAGE_SIZE } from './config';
 import { Employee } from '../typedef';
 
 export const getEmployees = (page: number = 1): Promise<Employee[]> => {
@@ -14,8 +14,8 @@ export const getCount = (): Promise<number> => {
 type NotifyFn = (data: Employee[], completedRate: number) => void
 export const fetchAllEmployees = async (notify: NotifyFn) => {
   let employees: Employee[] = []
-  const pages = 27
-  const totalCount = 1310
+  const totalCount = await getCount()
+  const pages = Math.ceil( totalCount / MAX_PAGE_SIZE )
   const pageNumbers = new Array(pages).fill(0).map((_, idx) => idx+1)
 
   // sequential
