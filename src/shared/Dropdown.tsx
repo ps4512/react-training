@@ -14,9 +14,10 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
     super(props);
     this.state = { value: '' };
 
-    this.handleChange = this.handleChange.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
   }
 
+  // handleChange(event: ChangeEvent<HTMLSelectElement>){
   handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const value = (event.target as HTMLSelectElement).value
     this.props.onChanged(value)

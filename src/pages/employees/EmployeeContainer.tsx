@@ -4,11 +4,11 @@ import { to2 } from '../../utils/math';
 
 import { EmployeeDetails } from './EmployeeDetails';
 import { Employee } from '../../typedef';
-import { getEmployees } from '../../api/EmployeeApi';
+import { EmployeeSalarySummary } from './EmployeeSalarySummary'
+import { getEmployees, fetchAllEmployees } from '../../api/EmployeeApi';
 
 import { Loader } from '../../shared/Loader';
 import { Sidebar } from '../../shared/sidebar/sidebar';
-import { CurrencyFormat } from '../../shared/CurrencyFormat';
 
 type EmployeeContainerProps = {
   label: string
@@ -19,11 +19,11 @@ type EmployeeContainerState = {
   employees: Employee[]
   loading: boolean
   completedRate: number
-  displayAdditionalSummaries: boolean
+  // displayAdditionalSummaries: boolean
   sidebarCollapsed: boolean
 }
 
-export class EmployeeContainer extends React.Component<
+export class EmployeeContainer extends React.PureComponent<
   EmployeeContainerProps,
   EmployeeContainerState
 >{
@@ -31,13 +31,14 @@ export class EmployeeContainer extends React.Component<
     employees: [],
     loading: true,
     completedRate: 0,
-    displayAdditionalSummaries: false,
+    // displayAdditionalSummaries: false,
     sidebarCollapsed: true
   } as EmployeeContainerState
 
   componentDidMount(){
-    getEmployees()
-      .then((employees) => this.setState({ employees, loading: false, completedRate: 1 }))
+    fetchAllEmployees((employees, completedRate) =>
+          this.setState({ employees, completedRate }))
+      .then(() => this.setState({ loading: false }))
   }
 
   onEmployeeBenefitClicked(e: Employee){
@@ -52,15 +53,16 @@ export class EmployeeContainer extends React.Component<
     console.log('💰', e)
   }
 
-  calculateTotalSalary() {
-    return this.state.employees.reduce((sum, e) => sum + e.salary, 0)
-  }
+  uniqueSkills(){
+    // var allSkills = this.state.employees.reduce(
+    //   (skills, e) => {
+    //     skills.push(...e.skills)
+    //     return skills
+    //   }, [] as string[])
 
-  toggleDisplayAdditionalSummaries = () => {
-    this.setState(state => ({
-      ...state,
-      displayAdditionalSummaries: !state.displayAdditionalSummaries
-    }))
+    var skills = this.state.employees.flatMap(e => e.skills)
+    var skillSet = new Set(skills)
+    return [...skillSet]
   }
 
   toggleSidebarCollapsed = () => {
@@ -82,18 +84,7 @@ export class EmployeeContainer extends React.Component<
       count: {this.state.employees.length}
       {` `}
       ({to2(this.state.completedRate * 100)} %)
-      <input id="displaySummary" type="checkbox" onClick={this.toggleDisplayAdditionalSummaries} />
-      <label htmlFor="displaySummary">display additional costs</label>
-      <ul>
-        <li>monthly salary cost: {` `}
-          <CurrencyFormat value={this.calculateTotalSalary()} displayType={'text'} thousandSeparator={true} prefix={'€'} /></li>
-        {this.state.displayAdditionalSummaries && <>
-          <li>quarterly salary cost: {` `}
-            <CurrencyFormat value={this.calculateTotalSalary() * 3} displayType={'text'} thousandSeparator={true} prefix={'€'} /></li>
-          <li>yearly salary cost: {` `}
-            <CurrencyFormat value={this.calculateTotalSalary() * 12} displayType={'text'} thousandSeparator={true} prefix={'€'} /></li>
-        </>}
-      </ul>
+     <EmployeeSalarySummary employees={this.state.employees} />
       {this.state.employees &&
         <ol>
         {this.state.employees.map(e =>

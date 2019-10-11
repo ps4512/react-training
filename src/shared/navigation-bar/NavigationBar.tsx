@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './NavigationBar.css'
 
 import { Dropdown } from '../Dropdown';
+import { Currencies, CurrencyContext } from '../../contexts/currencies';
 
 type NavigationBarProps = {
 }
@@ -18,6 +19,9 @@ const items = {
 }
 
 export const NavigationBar = () => {
+  // a hook
+  // const { setValue } = useContext(CurrencyContext)
+
   const countryChange = (country: string) => {
     console.log(country)
   }
@@ -53,6 +57,13 @@ export const NavigationBar = () => {
       </nav>
 
       <Dropdown items={items} onChanged={countryChange}></Dropdown>
+
+      <CurrencyContext.Consumer>
+        {({ setValue }) => <Dropdown
+                items={Currencies}
+                onChanged={setValue}
+              ></Dropdown>}
+      </CurrencyContext.Consumer>
     </header>
   );
 }

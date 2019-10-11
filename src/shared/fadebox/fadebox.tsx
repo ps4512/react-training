@@ -16,9 +16,9 @@ export class FadeBox extends React.Component {
   }
 
   componentDidMount(){
-    id = setInterval(() => {
-      (this as any).setState(({ fadeOut }: any) => ({ fadeOut: ! fadeOut }))
-    }, 3000)
+    // id = setInterval(() => {
+    //   (this as any).setState(({ fadeOut }: any) => ({ fadeOut: ! fadeOut }))
+    // }, 3000)
   }
 
   componentWillUnmount(){
