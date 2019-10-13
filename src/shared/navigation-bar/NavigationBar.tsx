@@ -5,6 +5,7 @@ import './NavigationBar.css'
 
 import { Dropdown } from '../Dropdown';
 import { Currencies, CurrencyContext } from '../../contexts/currencies';
+import { CountryDropdown } from '../connected/CountryDropdown';
 
 type NavigationBarProps = {
 }
@@ -12,19 +13,19 @@ type NavigationBarProps = {
 type NavigationBarState = {
 }
 
-const items = {
-  'PL': "Poland",
-  "LT": "Lithuania",
-  "LV": "Latvia"
-}
+// const items = {
+//   'PL': "Poland",
+//   "LT": "Lithuania",
+//   "LV": "Latvia"
+// }
 
 export const NavigationBar = () => {
   // a hook
   // const { setValue } = useContext(CurrencyContext)
 
-  const countryChange = (country: string) => {
-    console.log(country)
-  }
+  // const countryChange = (country: string) => {
+  //   console.log(country)
+  // }
 
   return (
     <header className="App-header">
@@ -56,7 +57,8 @@ export const NavigationBar = () => {
         </Link> |
       </nav>
 
-      <Dropdown items={items} onChanged={countryChange}></Dropdown>
+      {/* <Dropdown items={items} onChanged={countryChange}></Dropdown> */}
+      <CountryDropdown />
 
       <CurrencyContext.Consumer>
         {({ setValue }) => <Dropdown

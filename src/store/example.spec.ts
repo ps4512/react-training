@@ -12,6 +12,18 @@ describe('Redux Store', () => {
 
     // then
     expect(store.getState()).toEqual({
+      "geo": {
+        "countries": {
+          "US": "United States of America",
+          "UK": "United Kingdom",
+          "DE": "Germany",
+          "FR": "France",
+          "NL": "Netherlands",
+          "PL": "Poland",
+          "IT": "Italy",
+          "ES": "Spain"
+        }
+      },
       "benefits": {},
       "employees": {
         "chosenCountry": "UK",
