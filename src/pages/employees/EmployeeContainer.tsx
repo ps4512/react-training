@@ -5,10 +5,11 @@ import { to2 } from '../../utils/math';
 import { EmployeeDetails } from './EmployeeDetails';
 import { Employee } from '../../typedef';
 import { EmployeeSalarySummary } from './EmployeeSalarySummary'
-import { getEmployees, fetchAllEmployees } from '../../api/EmployeeApi';
+import { fetchAllEmployees } from '../../api/EmployeeApi';
 
 import { Loader } from '../../shared/Loader';
 import { Sidebar } from '../../shared/sidebar/sidebar';
+import { Header } from '../../shared/Header'
 
 type EmployeeContainerProps = {
   label: string
@@ -37,7 +38,11 @@ export class EmployeeContainer extends React.PureComponent<
 
   componentDidMount(){
     fetchAllEmployees((employees, completedRate) =>
-          this.setState({ employees, completedRate }))
+        this.setState({ employees, completedRate })
+        // after moving to Redux
+        //  - component state is moved to redux, component becomes a presentational one
+        // this.props.onNotify(employees, completedRate)
+      )
       .then(() => this.setState({ loading: false }))
   }
 
@@ -71,7 +76,7 @@ export class EmployeeContainer extends React.PureComponent<
 
   render(){
     return <>
-      <h2>{this.props.label}</h2>
+      <Header color="red">{this.props.label}</Header>
       <Sidebar
         collapsed={this.state.sidebarCollapsed}
         onCloseClick={this.toggleSidebarCollapsed}>
@@ -98,3 +103,5 @@ export class EmployeeContainer extends React.PureComponent<
     </>
   }
 }
+
+export default EmployeeContainer

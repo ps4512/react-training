@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react'
 
 import { CurrencyFormat } from '../../shared/CurrencyFormat'
 import { Table } from '../../shared/table/table';
+import { Header } from '../../shared/Header';
 
 type FinancesContainerProps = {
   label: string
@@ -11,7 +12,7 @@ type FinancesContainerProps = {
 type FinancesContainerState = {
 }
 
-export class FinancesContainer extends React.Component<
+export default class FinancesContainer extends React.Component<
   FinancesContainerProps,
   FinancesContainerState
 >{
@@ -20,7 +21,12 @@ export class FinancesContainer extends React.Component<
 
   render(){
     return <>
-      <h2>{this.props.label}</h2>
+    {/* CSS in JS */}
+      <span style={{
+        color: "red",
+        fontWeight: "bold"
+      }}>hello hello</span>
+      <Header color="blue">{this.props.label}</Header>
       <Table headers={
         ['Cost Category', 'Total Monthly Expenses', 'Total Yearly Expenses']
       } rows={[
