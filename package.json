@@ -12,7 +12,7 @@
     "@types/react-router-dom": "^4.3.4",
     "@types/styled-components": "^4.1.19",
     "classnames": "^2.2.6",
-    "immer": "^4.0.1",
+    "immer": "^9.0.6",
     "node-waves": "^0.7.6",
     "react": "^16.9.0",
     "react-currency-format": "^1.0.0",
